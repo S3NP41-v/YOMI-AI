@@ -1,7 +1,8 @@
 {
     "cores": 8,
-    "mutationRate": 0.05,
-    "mutationSeverity": 0.1,
-    "population": 16,
-    "tournamentSize": 4
+    "mutationRate": 0.3,
+    "mutationSeverity": 0.5,
+    "population": 32,
+    "satisfaction": "Fitness 11.9",
+    "tournamentSize": 8
 }

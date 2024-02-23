@@ -29,6 +29,7 @@ executable YOMI-AI
     other-modules:    Settings, Model, Training, Utils
     build-depends:    base ^>=4.17.2.1
                     , bytestring
+                    , text
                     , aeson
                     , aeson-pretty
                     , random

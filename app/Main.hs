@@ -22,45 +22,59 @@ you could do that with cold logic, but this is a simple test to see if i even ca
 
 -}
 
--- todo: rewrite training code
-
 
 main :: IO ()
 main = do
-  undefined
-
   -- settings <- readSettings
 
-  -- hwModel <- train hwModelConf settings
+  -- hwModel <- trainEvolutionary' logger hwModelConf settings evaluateModel
   -- writeModel "data/hwModel.model" hwModel
 
 
--- main :: IO ()
--- main = do
---   hwModel <- readModel "data/hwModel.model"
+  hwModel <- readModel "data/hwModel.model"
+  inputs <- replicateM 100 randInput
 
---   inputs <- replicateM 100 randInput
+  putStrLn "results:"
+  mapM_ (\inp -> do
+    putStrLn (replicate 100 '-')
+    putStrLn $ "target:   " <> show (pos inp)
+    putStrLn $ "output:   " <> show (head $ forwardPropagate (vals inp) hwModel)
+    putStrLn $ "refrence: " <> string inp
+        ) inputs
 
---   mapM_ (\inp -> printf "%s\npos given: %.4f\npos expected: %d\nevaluation: %.4f\nstring: %s\n" (replicate 50 '-') (head (forwardPropagate (vals inp) hwModel)) (pos inp) (evaluateFromInput hwModel inp) (string inp)) inputs
 
 
-
-
-logger :: (Float, Model) -> IO ()
-logger (f, model) = printf "evaluation: %.4f   \n" f
 
 
 hwModelConf :: ModelConf
 hwModelConf = ModelConf {inputs = 24, hiddenL = 2, hiddenN = 12, outputs = 1}
 
 
+evaluateModel :: Model -> IO (Float, Model)
+evaluateModel model = do
+  inputs <- replicateM 100 randInput
+
+  let outputs = map (\inp -> 12 - abs (fromIntegral (pos inp) - head (forwardPropagate (vals inp) model))) inputs
+
+  let score   = sum outputs / 100
+
+  return (score, model)
+
+
+logger :: LoggingData -> IO ()
+logger (LoggingData (f, model) iterations thread models) = do
+  putStrLn $ ("\x1b[" <> show (thread + 5) <> ";0H ")
+          <> (show thread ++ ": ")
+          <> ("iteration: " ++ show iterations ++ " ")
+          <> ("fitness: " ++ show f) <> replicate 10 ' '
+
 
 randInput :: IO Input
 randInput = do
-  pre   <- getStdRandom (randomR (0, 12))       :: IO Int
+  pre   <- getStdRandom (randomR (0, 12)) :: IO Int
 
-  pre' <- sequence $ take pre randString'
-  after' <- sequence $ take (12 - pre) randString'
+  let pre' = replicate pre ' '
+  let after' = replicate (12 - pre) ' '
 
   let xs = pre' ++ "Hello World!" ++ after'
   let fs = map (\x -> 1 / fromIntegral (ord x)) xs

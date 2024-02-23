@@ -66,4 +66,4 @@ data ModelConf = ModelConf
 data Model = Model
   { biases  :: [[Float]]
   , weights :: [[Float]]
-  } deriving ( Read )
+  } deriving ( Show, Read )
