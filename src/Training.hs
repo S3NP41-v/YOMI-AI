@@ -99,7 +99,6 @@ reproduce settings  models = do
 
 crossover :: Settings -> Model -> Model -> IO Model
 crossover settings alpha omega = do
-  -- TODO: instead of flipping a coin select a point on which to split
   wSigma <- randInt (1, length (weights alpha) - 2) >>= \split -> return $ take split (weights alpha) <> drop split (weights omega)
   bSigma <- randInt (1, length (biases  alpha) - 2) >>= \split -> return $ take split (biases  alpha) <> drop split (biases  omega)
 
