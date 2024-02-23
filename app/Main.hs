@@ -25,15 +25,15 @@ you could do that with cold logic, but this is a simple test to see if i even ca
 
 main :: IO ()
 main = do
-  -- settings <- readSettings
+  settings <- readSettings
 
-  -- hwModel <- trainEvolutionary' logger hwModelConf settings evaluateModel
-  -- writeModel "data/hwModel.model" hwModel
-
+  hwModel <- trainEvolutionary' logger hwModelConf settings evaluateModel
+  writeModel "data/hwModel.model" hwModel
 
   hwModel <- readModel "data/hwModel.model"
   inputs <- replicateM 100 randInput
 
+  putStrLn "\x1b[2J\x1b[H"
   putStrLn "results:"
   mapM_ (\inp -> do
     putStrLn (replicate 100 '-')
