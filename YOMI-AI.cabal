@@ -1,0 +1,38 @@
+cabal-version:      2.4
+name:               YOMI-AI
+version:            0.1.0.0
+
+-- A short (one-line) description of the package.
+-- synopsis:
+
+-- A longer description of the package.
+-- description:
+
+-- A URL where users can report bugs.
+-- bug-reports:
+
+-- The license under which the package is released.
+-- license:
+author:             S3NP41-v
+maintainer:         s3np41v@gmail.com
+
+
+
+
+executable YOMI-AI
+    main-is:          Main.hs
+
+    ghc-options:      -threaded
+    
+    hs-source-dirs:   src
+    
+    other-modules:    Settings, Model, Training, Utils
+    build-depends:    base ^>=4.17.2.1
+                    , bytestring
+                    , aeson
+                    , aeson-pretty
+                    , random
+                    , data-default
+
+    hs-source-dirs:   app
+    default-language: Haskell2010

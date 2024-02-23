@@ -1,0 +1,7 @@
+{
+    "cores": 8,
+    "mutationRate": 0.05,
+    "mutationSeverity": 0.1,
+    "population": 16,
+    "tournamentSize": 4
+}
