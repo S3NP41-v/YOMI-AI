@@ -18,8 +18,6 @@ import Text.Printf   ( printf )
 since this is my first ever AI lets make a test,
 lets train an AI that will detect where the substring "Hello World!" appears in a string
 you could do that with cold logic, but this is a simple test to see if i even can do it
-
-
 -}
 
 
@@ -27,8 +25,8 @@ main :: IO ()
 main = do
   settings <- readSettings
 
-  hwModel <- trainEvolutionary' logger hwModelConf settings evaluateModel
-  writeModel "data/hwModel.model" hwModel
+  -- hwModel <- trainEvolutionary' logger hwModelConf settings evaluateModel
+  -- writeModel "data/hwModel.model" hwModel
 
   hwModel <- readModel "data/hwModel.model"
   inputs <- replicateM 100 randInput
@@ -41,9 +39,6 @@ main = do
     putStrLn $ "output:   " <> show (head $ forwardPropagate (vals inp) hwModel)
     putStrLn $ "refrence: " <> string inp
         ) inputs
-
-
-
 
 
 hwModelConf :: ModelConf
